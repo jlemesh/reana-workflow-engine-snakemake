@@ -8,6 +8,8 @@
 
 """REANA-Workflow-Engine-Snakemake utilities."""
 
+import os
+
 from reana_commons.publisher import WorkflowStatusPublisher
 from reana_commons.utils import build_progress_message
 from snakemake.jobs import Job
@@ -25,7 +27,7 @@ def publish_workflow_start(
     publisher.publish_workflow_status(
         workflow_uuid,
         status=status_running,
-        message={"progress": build_progress_message(total=total_jobs)},
+        message={"progress": build_progress_message(total=total_jobs), "pod_name": os.getenv("WORKFLOW_POD_NAME")},
     )
 
 
